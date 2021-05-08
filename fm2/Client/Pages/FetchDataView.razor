@@ -1,0 +1,47 @@
+﻿@page "/fetchdataview"
+@using  fm2.Client.ViewModels
+@inject HttpClient Http
+@inject IFetchDataViewModel fetchDataViewModel
+
+@* https://itnext.io/a-simple-mvvm-implementation-in-client-side-blazor-8c875c365435 *@
+@* https://www.linkedin.com/pulse/blazor-web-assembly-first-impressions-part-2-mvvm-ben-kotvis/?articleId=6670673429957537792 *@
+
+<h1>Weather forecast view</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (fetchDataViewModel.WeatherForecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in fetchDataViewModel.WeatherForecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@*@functions {
+    protected async Task OnInitAsync()
+    {
+        await fetchDataViewModel.RetrieveForecastsAsync();
+    }
+}*@
